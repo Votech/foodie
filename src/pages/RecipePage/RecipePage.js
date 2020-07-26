@@ -9,7 +9,6 @@ import {
   CircularProgress,
   Paper,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import HeaderBar from '../../components/HeaderBar';
 import MealCard from '../../components/MealCard';
 
@@ -35,7 +34,12 @@ class RecipePage extends Component {
       const data2 = await response2.json();
       this.setState({ similarRecipes: data2 });
       console.log('similar recipes', data2);
-      console.log('Hello! Iam componentDidUpdate');
+
+      const url3 = `https://api.spoonacular.com/recipes/random?apiKey=${apiKey}&number=10`;
+      const response3 = await fetch(url3);
+      const data3 = await response3.json();
+      this.setState({ randomRecipes: data3.recipes });
+      console.log('random recipes', data3.recipes);
     }
   }
 
@@ -70,19 +74,20 @@ class RecipePage extends Component {
       readyInMinutes,
       extendedIngredients,
       servings,
+      nutrition,
     } = this.state.currentRecipe;
 
     return (
       <Grid container direction='column'>
         <HeaderBar />
-        <Grid item container style={{ marginTop: '20px' }}>
-          <Grid item xs={false} sm={2} />
+        <Grid item container justify='center' style={{ marginTop: '20px' }}>
+          <Grid item xs={false} sm={1} lg={2} />
           <Grid
             item
             container
             alignItems='flex-start'
             xs={12}
-            sm={6}
+            md={6}
             style={{ padding: '0 20px' }}
           >
             <Grid item container>
@@ -92,11 +97,23 @@ class RecipePage extends Component {
               >
                 <Grid item container>
                   <Grid item xs={12}>
-                    <Typography variant='h5'>{title}</Typography>
+                    <Typography
+                      variant='h5'
+                      style={{ margin: '20px 0 20px 20px' }}
+                    >
+                      {title}
+                    </Typography>
                   </Grid>
                   <Grid item xs={12}>
-                    <Typography variant='subtitle1'>
-                      Likes: {aggregateLikes}
+                    <Typography
+                      variant='subtitle1'
+                      style={{ marginLeft: '20px' }}
+                    >
+                      Likes:{' '}
+                      <span style={{ fontWeight: 'bold' }}>
+                        {' '}
+                        {aggregateLikes}
+                      </span>
                     </Typography>
                   </Grid>
                 </Grid>
@@ -104,22 +121,78 @@ class RecipePage extends Component {
                   item
                   container
                   spacing={2}
+                  justify='center'
                   style={{ marginBottom: '20px' }}
                 >
-                  <Grid item xs={9}>
+                  <Grid item sm={12} lg={8}>
                     <img src={image} alt={title} style={{ width: '100%' }} />
                   </Grid>
-                  <Grid item container direction='column' xs={3}>
-                    <Typography variant='subtitle1'>
-                      Cooking time <br />{' '}
-                      <span style={{ fontWeight: 'bold' }}>
-                        {readyInMinutes} min{' '}
-                      </span>
-                    </Typography>
-                    <Typography variant='subtitle1'>
-                      Servings <br />
-                      <span style={{ fontWeight: 'bold' }}> {servings} </span>
-                    </Typography>
+                  <Grid item container xs={12} lg={2}>
+                    <Grid item container xs={5} lg={12}>
+                      <Typography
+                        variant='subtitle1'
+                        style={{ marginLeft: '20px' }}
+                      >
+                        Cooking time <br />{' '}
+                        <span style={{ fontWeight: 'bold' }}>
+                          {readyInMinutes} min{' '}
+                        </span>
+                      </Typography>
+                      <Typography
+                        variant='subtitle1'
+                        style={{ marginLeft: '20px' }}
+                      >
+                        Servings <br />
+                        <span style={{ fontWeight: 'bold' }}> {servings} </span>
+                      </Typography>
+                    </Grid>
+                    {nutrition ? (
+                      <Grid item container xs={7} lg={6}>
+                        <Typography
+                          variant='subtitle1'
+                          style={{ marginLeft: '20px' }}
+                        >
+                          Calories <br />
+                          <span style={{ fontWeight: 'bold' }}>
+                            {' '}
+                            {nutrition.nutrients[0].amount}{' '}
+                          </span>
+                        </Typography>
+
+                        <Typography
+                          variant='subtitle1'
+                          style={{ marginLeft: '20px' }}
+                        >
+                          Fat <br />{' '}
+                          <span style={{ fontWeight: 'bold' }}>
+                            {nutrition.nutrients[1].amount}g{' '}
+                          </span>
+                        </Typography>
+
+                        <Typography
+                          variant='subtitle1'
+                          style={{ marginLeft: '20px' }}
+                        >
+                          Carbs <br />
+                          <span style={{ fontWeight: 'bold' }}>
+                            {' '}
+                            {nutrition.nutrients[3].amount}g{' '}
+                          </span>
+                        </Typography>
+
+                        <Typography
+                          variant='subtitle1'
+                          style={{ marginLeft: '20px' }}
+                        >
+                          Protein <br />{' '}
+                          <span style={{ fontWeight: 'bold' }}>
+                            {nutrition.nutrients[8].amount}g{' '}
+                          </span>
+                        </Typography>
+                      </Grid>
+                    ) : (
+                      <CircularProgress />
+                    )}
                   </Grid>
                 </Grid>
               </Paper>
@@ -168,7 +241,7 @@ class RecipePage extends Component {
                   </Typography>
                   <List>
                     {analyzedInstructions ? (
-                      analyzedInstructions[0].steps ? (
+                      analyzedInstructions[0] ? (
                         analyzedInstructions[0].steps.map((step, i) => {
                           return (
                             <ListItem key={i} style={{ padding: '4px 16px' }}>
@@ -230,14 +303,23 @@ class RecipePage extends Component {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item container spacing={2} xs={12} sm={2}>
+          <Grid
+            item
+            container
+            justify='center'
+            spacing={2}
+            xs={12}
+            sm={6}
+            md={4}
+            lg={2}
+          >
             <Grid item>
               <Typography variant='h5'>Recommended Recipes</Typography>
             </Grid>
             {this.state.randomRecipes ? (
               this.state.randomRecipes.map((recipe, i) => {
                 return (
-                  <Grid item width='100%' key={i}>
+                  <Grid item xs={12} key={i}>
                     <MealCard
                       img={this.state.randomRecipes[i].image}
                       title={this.state.randomRecipes[i].title}
@@ -250,7 +332,7 @@ class RecipePage extends Component {
               <CircularProgress />
             )}
           </Grid>
-          <Grid item xs={false} sm={2} />
+          <Grid item xs={false} md={1} lg={2} />
         </Grid>
       </Grid>
     );

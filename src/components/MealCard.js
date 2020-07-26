@@ -25,13 +25,17 @@ const useStyles = makeStyles({
     width: '100%',
   },
   actionArea: {
+    height: '100%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
   },
+  content: {
+    padding: '8px',
+  },
 });
 
-const MealCard = ({ img, title, nutrients, id, root2 }) => {
+const MealCard = ({ img, title, nutrients, id, nutrition }) => {
   const classes = useStyles();
   return (
     <Card className={classes.root}>
@@ -48,8 +52,8 @@ const MealCard = ({ img, title, nutrients, id, root2 }) => {
         ) : (
           <CircularProgress />
         )}
-        <CardContent>
-          <Typography gutterBottom variant='h5' component='h2'>
+        <CardContent className={classes.content}>
+          <Typography gutterBottom variant='h6' component='h2'>
             {title}
           </Typography>
         </CardContent>
@@ -89,6 +93,32 @@ const MealCard = ({ img, title, nutrients, id, root2 }) => {
             </Grid>
           </Grid>
         ) : null}
+        <Grid container justify='center'>
+          {nutrition
+            ? nutrition[0]
+              ? nutrition.map((n, i) => {
+                  return (
+                    <Grid item container xs={3} direction='column' key={i}>
+                      <Typography
+                        variant='subtitle1'
+                        color='secondary'
+                        align='center'
+                      >
+                        {nutrition[i].title}
+                      </Typography>
+                      <Typography
+                        gutterBottom
+                        variant='subtitle1'
+                        align='center'
+                      >
+                        {nutrition[i].amount}
+                      </Typography>
+                    </Grid>
+                  );
+                })
+              : null
+            : null}
+        </Grid>
       </CardActionArea>
     </Card>
   );

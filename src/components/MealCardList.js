@@ -12,6 +12,7 @@ const MealCardList = ({ recipes }) => {
               <MealCard
                 img={recipes[i].image}
                 title={recipes[i].title}
+                nutrition={recipes[i].nutrition ? recipes[i].nutrition : null}
                 nutrients={recipes[i].nutrition.nutrients}
                 id={recipes[i].id}
               />

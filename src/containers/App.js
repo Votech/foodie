@@ -3,21 +3,41 @@ import { Switch, Route, withRouter } from 'react-router-dom';
 import './App.css';
 import Home from '../pages/Home/Home';
 import RecipePage from '../pages/RecipePage/RecipePage';
+import ScrollToTop from '../components/ScrollToTop';
 
 class App extends Component {
   state = {
     value: '',
+    search: '',
+    maxCalories: '',
+    maxCarbs: '',
+    maxFat: '',
+    minProtein: '',
     recipes: [],
   };
 
   handleChange = (event) => {
-    this.setState({ value: event.target.value });
+    this.setState({ [event.target.name]: event.target.value });
   };
 
   handleSubmit = async (event) => {
     event.preventDefault();
+    let x = this.state.search;
+    if (this.state.maxCalories) {
+      x += `&maxCalories=${this.state.maxCalories}`;
+    }
+    if (this.state.maxCarbs) {
+      x += `&maxCarbs=${this.state.maxCarbs}`;
+    }
+    if (this.state.maxFat) {
+      x += `&maxFat=${this.state.maxFat}`;
+    }
+    if (this.state.minProtein) {
+      x += `&minProtein=${this.state.minProtein}`;
+    }
+
     const apiKey = '8f4c6941944345dbbf34a7f4e68dc645';
-    const url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${this.state.value}&number=6&addRecipeNutrition=true`;
+    const url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${x}&number=6&addRecipeNutrition=true`;
     const response = await fetch(url);
     const data = await response.json();
     this.setState({ recipes: data.results });
@@ -37,6 +57,7 @@ class App extends Component {
   render() {
     return (
       <>
+        <ScrollToTop />
         <Switch>
           <Route
             exact
@@ -45,7 +66,11 @@ class App extends Component {
               <Home
                 {...props}
                 recipes={this.state.recipes}
-                value={this.state.value}
+                search={this.state.search}
+                maxFat={this.state.maxFat}
+                maxCarbs={this.state.maxCarbs}
+                maxCalories={this.state.maxCalories}
+                minProtein={this.state.minProtein}
                 handleChange={this.handleChange}
                 handleSubmit={this.handleSubmit}
               />
