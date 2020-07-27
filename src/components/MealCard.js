@@ -30,9 +30,7 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     justifyContent: 'flex-start',
   },
-  content: {
-    padding: '8px',
-  },
+  content: {},
 });
 
 const MealCard = ({ img, title, nutrients, id, nutrition }) => {

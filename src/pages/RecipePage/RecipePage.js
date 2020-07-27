@@ -78,7 +78,7 @@ class RecipePage extends Component {
     } = this.state.currentRecipe;
 
     return (
-      <Grid container direction='column'>
+      <Grid container direction='column' style={{ minHeight: '100vh' }}>
         <HeaderBar />
         <Grid item container justify='center' style={{ marginTop: '20px' }}>
           <Grid item xs={false} sm={1} lg={2} />
@@ -101,7 +101,7 @@ class RecipePage extends Component {
                       variant='h5'
                       style={{ margin: '20px 0 20px 20px' }}
                     >
-                      {title}
+                      <span style={{ fontWeight: 'bold' }}> {title}</span>
                     </Typography>
                   </Grid>
                   <Grid item xs={12}>
@@ -196,6 +196,118 @@ class RecipePage extends Component {
                   </Grid>
                 </Grid>
               </Paper>
+              <Grid item container style={{ marginBottom: '20px' }} xs={12}>
+                <Paper elevation={2} style={{ width: '100%', padding: '20px' }}>
+                  <div style={{ display: 'flex' }}>
+                    <div>
+                      <div style={{ display: 'flex' }}>
+                        <span style={{ fontWeight: 'bold' }}> Carbs: </span>{' '}
+                        {nutrition ? (
+                          nutrition.caloricBreakdown ? (
+                            <div
+                              style={{
+                                width: '100%',
+                                display: 'flex',
+                                alignItems: 'center',
+                                marginLeft: '10px',
+                              }}
+                            >
+                              {nutrition.caloricBreakdown.percentCarbs}% {}
+                            </div>
+                          ) : (
+                            <CircularProgress />
+                          )
+                        ) : (
+                          <CircularProgress />
+                        )}{' '}
+                      </div>
+                      <div style={{ display: 'flex' }}>
+                        <span style={{ fontWeight: 'bold' }}>Fat:</span>{' '}
+                        {nutrition ? (
+                          nutrition.caloricBreakdown ? (
+                            <div
+                              style={{
+                                width: '100%',
+                                display: 'flex',
+                                alignItems: 'center',
+                                marginLeft: '10px',
+                              }}
+                            >
+                              {nutrition.caloricBreakdown.percentFat}% {}
+                            </div>
+                          ) : (
+                            <CircularProgress />
+                          )
+                        ) : (
+                          <CircularProgress />
+                        )}{' '}
+                      </div>
+                      <div style={{ display: 'flex' }}>
+                        <span style={{ fontWeight: 'bold' }}>Protein:</span>{' '}
+                        {nutrition ? (
+                          nutrition.caloricBreakdown ? (
+                            <div
+                              style={{
+                                width: '100%',
+                                display: 'flex',
+                                alignItems: 'center',
+                                marginLeft: '10px',
+                              }}
+                            >
+                              {nutrition.caloricBreakdown.percentProtein}% {}
+                            </div>
+                          ) : (
+                            <CircularProgress />
+                          )
+                        ) : (
+                          <CircularProgress />
+                        )}{' '}
+                      </div>
+                    </div>
+                    <div style={{ width: '100%' }}>
+                      {nutrition ? (
+                        nutrition.caloricBreakdown ? (
+                          <div
+                            style={{
+                              height: '100%',
+                              display: 'flex',
+                              flexDirection: 'column',
+                              justifyContent: 'space-between',
+                              marginLeft: '10px',
+                            }}
+                          >
+                            <div
+                              style={{
+                                height: '19px',
+                                width: `${nutrition.caloricBreakdown.percentCarbs}%`,
+                                background: 'green',
+                              }}
+                            />
+                            <div
+                              style={{
+                                height: '19px',
+                                width: `${nutrition.caloricBreakdown.percentFat}%`,
+                                background: 'yellow',
+                              }}
+                            />
+                            <div
+                              style={{
+                                height: '19px',
+                                width: `${nutrition.caloricBreakdown.percentProtein}%`,
+                                background: 'blue',
+                              }}
+                            />
+                          </div>
+                        ) : (
+                          <CircularProgress />
+                        )
+                      ) : (
+                        <CircularProgress />
+                      )}
+                    </div>
+                  </div>
+                </Paper>
+              </Grid>
               <Grid
                 item
                 container
@@ -204,7 +316,9 @@ class RecipePage extends Component {
               >
                 <Paper elevation={2}>
                   <Grid item style={{ padding: '20px' }}>
-                    <Typography variant='h6'>Ingredinets</Typography>
+                    <Typography variant='h6'>
+                      <span style={{ fontWeight: 'bold' }}>Ingredinets</span>
+                    </Typography>
                   </Grid>
                   <Grid item>
                     <List>
@@ -237,7 +351,7 @@ class RecipePage extends Component {
               >
                 <Paper elevation={2}>
                   <Typography variant='h6' style={{ padding: '20px' }}>
-                    Instructions
+                    <span style={{ fontWeight: 'bold' }}> Instructions </span>
                   </Typography>
                   <List>
                     {analyzedInstructions ? (
@@ -271,7 +385,7 @@ class RecipePage extends Component {
               >
                 <Paper elevation={2}>
                   <Typography variant='h6' style={{ padding: '20px' }}>
-                    Similar Recipes
+                    <span style={{ fontWeight: 'bold' }}>Similar Recipes</span>
                   </Typography>
                   <List>
                     {this.state.similarRecipes ? (

@@ -4,6 +4,7 @@ import './App.css';
 import Home from '../pages/Home/Home';
 import RecipePage from '../pages/RecipePage/RecipePage';
 import ScrollToTop from '../components/ScrollToTop';
+import Footer from '../components/Footer';
 
 class App extends Component {
   state = {
@@ -13,6 +14,7 @@ class App extends Component {
     maxCarbs: '',
     maxFat: '',
     minProtein: '',
+    numberOfRecipes: '10',
     recipes: [],
   };
 
@@ -37,7 +39,7 @@ class App extends Component {
     }
 
     const apiKey = '8f4c6941944345dbbf34a7f4e68dc645';
-    const url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${x}&number=6&addRecipeNutrition=true`;
+    const url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${x}&number=${this.state.numberOfRecipes}&addRecipeNutrition=true`;
     const response = await fetch(url);
     const data = await response.json();
     this.setState({ recipes: data.results });
@@ -47,7 +49,7 @@ class App extends Component {
 
   async componentDidMount() {
     const apiKey = '8f4c6941944345dbbf34a7f4e68dc645';
-    const url = `https://api.spoonacular.com/recipes/random?apiKey=${apiKey}&number=6`;
+    const url = `https://api.spoonacular.com/recipes/random?apiKey=${apiKey}&number=10`;
     const response = await fetch(url);
     const data = await response.json();
     this.setState({ recipes: data.recipes });
@@ -78,6 +80,7 @@ class App extends Component {
           />
           <Route path='/recipe/:id' component={RecipePage} />
         </Switch>
+        <Footer />
       </>
     );
   }

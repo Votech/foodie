@@ -4,11 +4,11 @@ import { Grid, CircularProgress } from '@material-ui/core';
 
 const MealCardList = ({ recipes }) => {
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} justify='center'>
       {recipes ? (
         recipes.map((recipe, i) => {
           return recipes[i].nutrition ? (
-            <Grid item xs={12} sm={6} md={4} key={i}>
+            <Grid item xs={11} sm={6} md={4} lg={3} key={i}>
               <MealCard
                 img={recipes[i].image}
                 title={recipes[i].title}
@@ -18,7 +18,7 @@ const MealCardList = ({ recipes }) => {
               />
             </Grid>
           ) : (
-            <Grid item xs={12} sm={6} md={4} key={i}>
+            <Grid item xs={11} sm={6} md={4} lg={3} key={i}>
               <MealCard
                 img={recipes[i].image}
                 title={recipes[i].title}

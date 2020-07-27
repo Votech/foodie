@@ -3,7 +3,9 @@ import { Grid, TextField, Button, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    margin: '20px 0',
+    padding: '20px 0 20px 0',
+    marginBottom: '20px',
+    borderBottom: '1px solid #c0c0c0',
   },
   form: {
     width: '100%',
@@ -27,6 +29,7 @@ const SearchBar = ({
   minProtein,
   handleChange,
   handleSubmit,
+  numberOfRecipes,
 }) => {
   const classes = useStyles();
 
@@ -49,7 +52,7 @@ const SearchBar = ({
           spacing={2}
           className={classes.searchBar}
         >
-          <Grid item xs={12} md={2}>
+          <Grid item xs={12} md={6}>
             <TextField
               className={classes.searchInput}
               name='search'
@@ -61,7 +64,7 @@ const SearchBar = ({
               onChange={handleChange}
             />
           </Grid>
-          <Grid item xs={3} md={2}>
+          <Grid item xs={6} md={3}>
             <TextField
               className={classes.searchInput}
               name='maxCalories'
@@ -73,7 +76,7 @@ const SearchBar = ({
               onChange={handleChange}
             />
           </Grid>
-          <Grid item xs={3} md={2}>
+          <Grid item xs={6} md={3}>
             <TextField
               className={classes.searchInput}
               name='maxFat'
@@ -85,7 +88,7 @@ const SearchBar = ({
               onChange={handleChange}
             />
           </Grid>
-          <Grid item xs={3} md={2}>
+          <Grid item xs={4} md={3}>
             <TextField
               className={classes.searchInput}
               name='maxCarbs'
@@ -97,7 +100,7 @@ const SearchBar = ({
               onChange={handleChange}
             />
           </Grid>
-          <Grid item xs={3} md={2}>
+          <Grid item xs={4} md={3}>
             <TextField
               className={classes.searchInput}
               name='minProtein'
@@ -110,14 +113,26 @@ const SearchBar = ({
             />
           </Grid>
 
-          <Grid item xs={12} md={2}>
+          <Grid item xs={4} md={3}>
+            <TextField
+              className={classes.searchInput}
+              name='numberOfRecipes'
+              id='standard-search'
+              label='number of Recipes'
+              type='search'
+              variant='filled'
+              value={numberOfRecipes}
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={12} md={3}>
             <Button
               className={classes.searchButton}
               variant='contained'
               color='primary'
               type='submit'
             >
-              Primary
+              Search
             </Button>
           </Grid>
         </Grid>
