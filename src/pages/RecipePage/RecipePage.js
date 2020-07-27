@@ -198,6 +198,13 @@ class RecipePage extends Component {
               </Paper>
               <Grid item container style={{ marginBottom: '20px' }} xs={12}>
                 <Paper elevation={2} style={{ width: '100%', padding: '20px' }}>
+                  <Grid item style={{ paddingBottom: '20px' }}>
+                    <Typography variant='h6'>
+                      <span style={{ fontWeight: 'bold' }}>
+                        Caloric breakdown
+                      </span>
+                    </Typography>
+                  </Grid>
                   <div style={{ display: 'flex' }}>
                     <div>
                       <div style={{ display: 'flex' }}>
